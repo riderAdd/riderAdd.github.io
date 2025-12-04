@@ -16,6 +16,24 @@
 </head>
 
 <body>
+	<div id="loveLockOverlay">
+		<div class="love-lock-card" id="loveLockCard">
+			<div class="love-lock-hearts">
+				<span></span><span></span><span></span>
+			</div>
+			<h2>To My Love</h2>
+			<p>输入我们的专属暗号，解锁这份心动。</p>
+			<div class="love-lock-input">
+				<div class="love-lock-input-wrap">
+					<input type="password" id="loveLockInput" placeholder="在这里写下暗号..." autocomplete="off" />
+					<button type="button" class="love-lock-toggle" id="loveLockToggle" aria-label="显示或隐藏暗号"></button>
+				</div>
+				<button id="loveLockBtn">开启</button>
+			</div>
+			<div class="love-lock-hint" id="loveLockHint"></div>
+		</div>
+	</div>
+
 	<div id="mainDiv">
 		<div id="content">
 			<div id="code">
@@ -57,37 +75,41 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		var offsetX = $("#loveHeart").width() / 2;
-		var offsetY = $("#loveHeart").height() / 2 - 55;
-		var together = new Date();
-		together.setFullYear(2025, 10, 5);
-		together.setHours(20);
-		together.setMinutes(0);
-		together.setSeconds(0);
-		together.setMilliseconds(0);
-		
-		if (!document.createElement('canvas').getContext) {
-			var msg = document.createElement("div");
-			msg.id = "errorMsg";
-			msg.innerHTML = "Your browser doesn't support HTML5!<br/>Recommend use Chrome 14+/IE 9+/Firefox 7+/Safari 4+"; 
-			document.body.appendChild(msg);
-			$("#code").css("display", "none")
-			$("#copyright").css("position", "absolute");
-			$("#copyright").css("bottom", "10px");
-		    document.execCommand("stop");
-		} else {
-			setTimeout(function () {
-				startHeartAnimation();
-			}, 5000);
+		$(function () {
+			LoveLock.onUnlock(function () {
+				offsetX = $("#loveHeart").width() / 2;
+				offsetY = $("#loveHeart").height() / 2 - 55;
+				var together = new Date();
+				together.setFullYear(2025, 10, 5);
+				together.setHours(20);
+				together.setMinutes(0);
+				together.setSeconds(0);
+				together.setMilliseconds(0);
+				
+				if (!document.createElement('canvas').getContext) {
+					var msg = document.createElement("div");
+					msg.id = "errorMsg";
+					msg.innerHTML = "Your browser doesn't support HTML5!<br/>Recommend use Chrome 14+/IE 9+/Firefox 7+/Safari 4+"; 
+					document.body.appendChild(msg);
+					$("#code").css("display", "none")
+					$("#copyright").css("position", "absolute");
+					$("#copyright").css("bottom", "10px");
+				    document.execCommand("stop");
+				} else {
+					setTimeout(function () {
+						startHeartAnimation();
+					}, 5000);
 
-			timeElapse(together);
-			setInterval(function () {
-				timeElapse(together);
-			}, 500);
+					timeElapse(together);
+					setInterval(function () {
+						timeElapse(together);
+					}, 500);
 
-			adjustCodePosition();
-			$("#code").typewriter();
-		}
+					adjustCodePosition();
+					$("#code").typewriter();
+				}
+			});
+		});
 	</script>
 </body>
 </html>

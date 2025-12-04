@@ -6,3 +6,32 @@ body{margin:0;padding:0;background:#ffe;font-size:12px;overflow:auto}#mainDiv{wi
 #code .story-rose{color:#d66efd;background:linear-gradient(90deg,#c471f5,#fa71cd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 2px 12px rgba(250,113,205,0.35)}
 #code .story-mint{color:#2ec4b6;font-style:italic;text-shadow:0 2px 10px rgba(46,196,182,0.25)}
 #code .story-sunset{color:#ff8fab;font-weight:600;text-shadow:0 3px 14px rgba(255,143,171,0.45)}
+
+body.love-locked{overflow:hidden}
+#loveLockOverlay{position:fixed;inset:0;background:radial-gradient(circle at top,#ffe1ec 0%,rgba(255,255,255,0.9) 45%,#ffeef6 100%);display:flex;align-items:center;justify-content:center;z-index:999;transition:opacity 0.6s ease,transform 0.6s ease;backdrop-filter:blur(4px)}
+#loveLockOverlay.love-lock-hidden{opacity:0;transform:scale(1.05);pointer-events:none}
+.love-lock-card{background:rgba(255,255,255,0.75);border-radius:24px;padding:40px 45px;text-align:center;box-shadow:0 25px 60px rgba(255,105,180,0.25),0 15px 35px rgba(255,126,179,0.15);max-width:420px;width:90%;position:relative;overflow:hidden}
+.love-lock-hearts{display:flex;justify-content:center;margin-bottom:25px;gap:15px}
+.love-lock-hearts span{width:24px;height:24px;background:#ff85a2;display:inline-block;transform:rotate(45deg);border-radius:4px;position:relative;animation:float-heart 3s ease-in-out infinite;box-shadow:0 8px 20px rgba(255,133,162,0.35)}
+.love-lock-hearts span:before,.love-lock-hearts span:after{content:"";position:absolute;width:24px;height:24px;background:#ff85a2;border-radius:50%}
+.love-lock-hearts span:before{top:-12px;left:0}
+.love-lock-hearts span:after{left:-12px;top:0}
+.love-lock-hearts span:nth-child(2){background:#ffb6c1;animation-delay:0.4s}
+.love-lock-hearts span:nth-child(3){background:#ffcfe1;animation-delay:0.8s}
+.love-lock-card h2{font-size:26px;margin:0 0 12px;color:#d63384;letter-spacing:1px}
+.love-lock-card p{margin:0 0 24px;color:#555;font-size:15px}
+.love-lock-input{display:flex;margin-bottom:12px;align-items:center;width:100%;flex-wrap:nowrap;gap:12px}
+.love-lock-input-wrap{flex:1 1 calc(100% - 150px);position:relative;min-width:0;padding-right:60px;z-index:0}
+.love-lock-input input{width:100%;padding:12px 44px 12px 16px;border-radius:12px;border:1px solid rgba(214,51,132,0.2);font-size:14px;background:rgba(255,255,255,0.9);box-shadow:inset 0 2px 6px rgba(0,0,0,0.05);outline:none;transition:border 0.2s;position:relative;z-index:1}
+.love-lock-input input:focus{border-color:#ff85a2}
+.love-lock-toggle{position:absolute;top:50%;right:10px;width:24px;height:24px;border:none;border-radius:999px;background:rgba(214,51,132,0.12);cursor:pointer;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;z-index:2}
+.love-lock-toggle:before{content:"👁️";font-size:14px;line-height:1}
+.love-lock-toggle.is-hidden:before{content:"🙈"}
+.love-lock-input > #loveLockBtn{padding:12px 26px;border:none;border-radius:12px;background:linear-gradient(45deg,#ff85a2,#ffb6c1);color:#fff;font-weight:600;letter-spacing:0.5px;cursor:pointer;box-shadow:0 10px 20px rgba(255,133,162,0.35);transition:transform 0.2s ease,box-shadow 0.2s ease;flex:0 0 120px;white-space:nowrap;margin-left:auto;z-index:3}
+.love-lock-input > #loveLockBtn:hover{transform:translateY(-1px);box-shadow:0 14px 24px rgba(255,133,162,0.4)}
+.love-lock-hint{font-size:13px;color:#999}
+.love-lock-card.love-lock-error{animation:lock-shake 0.4s ease}
+.love-lock-card.love-lock-success{box-shadow:0 25px 60px rgba(46,196,182,0.35);border:1px solid rgba(46,196,182,0.3)}
+
+@keyframes float-heart{0%,100%{transform:translateY(0) rotate(45deg)}50%{transform:translateY(-8px) rotate(45deg)}}
+@keyframes lock-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}

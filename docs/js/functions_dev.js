@@ -2,31 +2,35 @@
 var $window = $(window), gardenCtx, gardenCanvas, $garden, garden;
 var clientWidth = $(window).width();
 var clientHeight = $(window).height();
+var offsetX, offsetY;
 
 $(function () {
-    // setup garden
-	$loveHeart = $("#loveHeart");
-	var offsetX = $loveHeart.width() / 2;
-	var offsetY = $loveHeart.height() / 2 - 55;
-    $garden = $("#garden");
-    gardenCanvas = $garden[0];
-	gardenCanvas.width = $("#loveHeart").width();
-    gardenCanvas.height = $("#loveHeart").height()
-    gardenCtx = gardenCanvas.getContext("2d");
-    gardenCtx.globalCompositeOperation = "source-over";
-    garden = new Garden(gardenCtx, gardenCanvas);
-	
-	var contentWidth = $loveHeart.outerWidth(true) + $("#code").outerWidth(true);
-	$("#content").css("width", contentWidth);
-	var contentHeight = Math.max($loveHeart.outerHeight(true), $("#code").outerHeight(true));
-	$("#content").css("height", contentHeight);
-	$("#content").css("margin-top", Math.max(($window.height() - $("#content").height()) / 2, 10));
-	$("#content").css("margin-left", Math.max(($window.width() - $("#content").width()) / 2, 10));
+	function initLoveScene() {
+		$loveHeart = $("#loveHeart");
+		offsetX = $loveHeart.width() / 2;
+		offsetY = $loveHeart.height() / 2 - 55;
+	    $garden = $("#garden");
+	    gardenCanvas = $garden[0];
+		gardenCanvas.width = $("#loveHeart").width();
+	    gardenCanvas.height = $("#loveHeart").height()
+	    gardenCtx = gardenCanvas.getContext("2d");
+	    gardenCtx.globalCompositeOperation = "source-over";
+	    garden = new Garden(gardenCtx, gardenCanvas);
+		
+		var contentWidth = $loveHeart.outerWidth(true) + $("#code").outerWidth(true);
+		$("#content").css("width", contentWidth);
+		var contentHeight = Math.max($loveHeart.outerHeight(true), $("#code").outerHeight(true));
+		$("#content").css("height", contentHeight);
+		$("#content").css("margin-top", Math.max(($window.height() - $("#content").height()) / 2, 10));
+		$("#content").css("margin-left", Math.max(($window.width() - $("#content").width()) / 2, 10));
 
-    // renderLoop
-    setInterval(function () {
-        garden.render();
-    }, Garden.options.renderSpeed);
+	    // renderLoop
+	    setInterval(function () {
+	        garden.render();
+	    }, Garden.options.renderSpeed);
+	}
+
+    LoveLock.init(initLoveScene);
 });
 
 $(window).resize(function() {
@@ -83,6 +87,164 @@ function startHeartAnimation() {
 		}
 	}, interval);
 }
+
+var LoveLock = (function () {
+	var overlay, card, input, hint, button, toggle, expectedPass, expectedCompact;
+	var unlocked = false;
+	var unlockCallbacks = [];
+
+	function addUnlockCallback(callback) {
+		if (typeof callback !== 'function') {
+			return;
+		}
+		if (unlocked) {
+			callback();
+		} else {
+			unlockCallbacks.push(callback);
+		}
+	}
+
+	function flushUnlockCallbacks() {
+		if (!unlockCallbacks.length) {
+			return;
+		}
+		var queue = unlockCallbacks.slice(0);
+		unlockCallbacks = [];
+		for (var i = 0; i < queue.length; i++) {
+			try {
+				queue[i]();
+			} catch (err) {
+				if (window.console && console.error) {
+					console.error(err);
+				}
+			}
+		}
+	}
+
+	function normalize(str) {
+		return str.replace(/\s+/g, ' ').trim().toLowerCase();
+	}
+
+	function setHint(message, color) {
+		if (!hint) return;
+		hint.text(message).css('color', color || '#999');
+	}
+
+	function showError(message) {
+		card && card.addClass('love-lock-error');
+		setTimeout(function () { card && card.removeClass('love-lock-error'); }, 400);
+		setHint(message || '暗号好像不太对，再试试看～', '#d63384');
+	}
+
+	function bindInputEvents() {
+		if (!input || !input.length) return;
+		input.unbind('keypress');
+		input.bind('keypress', function (e) {
+			var key = e.key || e.keyCode;
+			if (key === 'Enter' || key === 13) {
+				handleSubmit();
+			}
+		});
+	}
+
+	function changeInputType(targetType) {
+		if (!input || !input.length) return;
+		var domInput = input[0];
+		var typeChanged = true;
+		try {
+			domInput.setAttribute('type', targetType);
+		} catch (err) {
+			typeChanged = false;
+		}
+		if (typeChanged && domInput.type === targetType) {
+			return;
+		}
+		var newInput = input.clone();
+		newInput.attr('type', targetType);
+		newInput.val(input.val());
+		input.replaceWith(newInput);
+		input = newInput;
+		bindInputEvents();
+	}
+
+	function togglePasswordVisibility() {
+		if (!input || !toggle) return;
+		var isHidden = toggle.hasClass('is-hidden');
+		if (isHidden) {
+			changeInputType('text');
+			toggle.removeClass('is-hidden');
+		} else {
+			changeInputType('password');
+			toggle.addClass('is-hidden');
+		}
+		var dom = input[0];
+		if (dom && dom.focus) {
+			dom.focus();
+			var length = input.val().length;
+			if (dom.setSelectionRange) {
+				dom.setSelectionRange(length, length);
+			}
+		}
+	}
+
+	function unlock() {
+		if (!overlay) return;
+		card && card.addClass('love-lock-success');
+		setHint('欢迎回到我们的秘密花园 💗', '#2ec4b6');
+		overlay.addClass('love-lock-hidden');
+		$('body').removeClass('love-locked');
+		setTimeout(function () { overlay.remove(); }, 700);
+		unlocked = true;
+		flushUnlockCallbacks();
+	}
+
+	function handleSubmit() {
+		if (!input) return;
+		var value = input.val();
+		if (!value.trim()) {
+			showError('先写下一句暗号吧～');
+			return;
+		}
+		var normalized = normalize(value);
+		var compact = normalized.replace(/\s+/g, '');
+		if (normalized === expectedPass || compact === expectedCompact) {
+			unlock();
+		} else {
+			showError('暗号好像不太对，再想想？');
+		}
+	}
+
+	return {
+		init: function (onReady) {
+			if (onReady) addUnlockCallback(onReady);
+			overlay = $('#loveLockOverlay');
+			if (!overlay.length) {
+				unlocked = true;
+				$('body').removeClass('love-locked');
+				flushUnlockCallbacks();
+				return;
+			}
+			card = $('#loveLockCard');
+			input = $('#loveLockInput');
+			hint = $('#loveLockHint');
+			button = $('#loveLockBtn');
+			toggle = $('#loveLockToggle');
+			expectedPass = normalize(window.atob('aSBsb3ZlIHlvdSBtb3JlIHRoYW4gaSBjYW4gc2F5'));
+			expectedCompact = expectedPass.replace(/\s+/g, '');
+			$('body').addClass('love-locked');
+			button.bind('click', handleSubmit);
+			bindInputEvents();
+			if (toggle.length) {
+				toggle.addClass('is-hidden');
+				toggle.bind('click', togglePasswordVisibility);
+			}
+			setTimeout(function () {
+				input.trigger('focus');
+			}, 500);
+		},
+		onUnlock: addUnlockCallback
+	};
+})();
 
 (function($) {
 	$.fn.typewriter = function() {
