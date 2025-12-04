@@ -13,18 +13,20 @@ $(function () {
 	gardenCanvas.width = $("#loveHeart").width();
     gardenCanvas.height = $("#loveHeart").height()
     gardenCtx = gardenCanvas.getContext("2d");
-    gardenCtx.globalCompositeOperation = "lighter";
+    gardenCtx.globalCompositeOperation = "source-over";
     garden = new Garden(gardenCtx, gardenCanvas);
 	
-	$("#content").css("width", $loveHeart.width() + $("#code").width());
-	$("#content").css("height", Math.max($loveHeart.height(), $("#code").height()));
+	var contentWidth = $loveHeart.outerWidth(true) + $("#code").outerWidth(true);
+	$("#content").css("width", contentWidth);
+	var contentHeight = Math.max($loveHeart.outerHeight(true), $("#code").outerHeight(true));
+	$("#content").css("height", contentHeight);
 	$("#content").css("margin-top", Math.max(($window.height() - $("#content").height()) / 2, 10));
 	$("#content").css("margin-left", Math.max(($window.width() - $("#content").width()) / 2, 10));
 
     // renderLoop
     setInterval(function () {
         garden.render();
-    }, Garden.options.growSpeed);
+    }, Garden.options.renderSpeed);
 });
 
 $(window).resize(function() {
@@ -43,29 +45,41 @@ function getHeartPoint(angle) {
 }
 
 function startHeartAnimation() {
-	var interval = 50;
+	var interval = 30;
 	var angle = 10;
 	var heart = new Array();
+	var totalStars = 0;
+	// 略微提高填充密度
+	var maxStars = 260;
 	var animationTimer = setInterval(function () {
-		var bloom = getHeartPoint(angle);
+		var point = getHeartPoint(angle);
 		var draw = true;
+		// 减小最小距离，让星星更密集一些
+		var minDistance = 5;
+		
+		// 检查距离，避免星星太密集
 		for (var i = 0; i < heart.length; i++) {
 			var p = heart[i];
-			var distance = Math.sqrt(Math.pow(p[0] - bloom[0], 2) + Math.pow(p[1] - bloom[1], 2));
-			if (distance < Garden.options.bloomRadius.max * 1.3) {
+			var distance = Math.sqrt(Math.pow(p[0] - point[0], 2) + Math.pow(p[1] - point[1], 2));
+			if (distance < minDistance) {
 				draw = false;
 				break;
 			}
 		}
-		if (draw) {
-			heart.push(bloom);
-			garden.createRandomBloom(bloom[0], bloom[1]);
+		
+		if (draw && totalStars < maxStars) {
+			heart.push(point);
+			garden.createParticle(point[0], point[1]);
+			totalStars++;
 		}
+		
+		angle += 0.2;
 		if (angle >= 30) {
 			clearInterval(animationTimer);
+			// 继续渲染动画，让星星闪烁
+			setTimeout(function() {
 			showMessages();
-		} else {
-			angle += 0.2;
+			}, 2000);
 		}
 	}, interval);
 }

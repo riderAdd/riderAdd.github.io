@@ -11,40 +11,35 @@
 	</style>
 	<link href="css/default.css" type="text/css" rel="stylesheet">
 	<script type="text/javascript" src="js/jquery.js"></script>
-	<script type="text/javascript" src="js/garden.js"></script>
-    <script type="text/javascript" src="js/functions.js"></script>
+	<script type="text/javascript" src="js/garden.js?v=3"></script>
+    <script type="text/javascript" src="js/functions.js?v=3"></script>
 </head>
 
 <body>
 	<div id="mainDiv">
 		<div id="content">
 			<div id="code">
-				<span class="comments">/**</span><br />
-				<span class="space"/><span class="comments">* We are both Fudan SSers and programmers,</span><br />
-				<span class="space"/><span class="comments">* so I write some code to celebrate our 1st anniversary.</span><br />
-				<span class="space"/><span class="comments">*/</span><br />
-				Boy i = <span class="keyword">new</span> Boy(<span class="string">"hackerzhou"</span>);<br />
-				Girl u = <span class="keyword">new</span> Girl(<span class="string">"MaryNee"</span>);<br />
-				<span class="comments">// Nov 2, 2010, I told you I love you. </span><br />
-				i.love(u);<br />
-				<span class="comments">// Luckily, you accepted and became my girlfriend eversince.</span><br />
-				u.accepted();<br />
-				<span class="comments">// Since then, I miss u every day.</span><br />
-				i.miss(u);<br />
-				<span class="comments">// And take care of u and our love.</span><br />
-				i.takeCareOf(u);<br />
-				<span class="comments">// You say that you won't be so easy to marry me.</span><br />
-				<span class="comments">// So I keep waiting and I have confidence that you will.</span><br />
-				<span class="keyword">boolean</span> isHesitate = <span class="keyword">true</span>;<br />
-				<span class="keyword">while</span> (isHesitate) {<br />
-				<span class="placeholder"/>i.waitFor(u);<br />
-				<span class="placeholder"/><span class="comments">// I think it is an important decision</span><br />
-				<span class="placeholder"/><span class="comments">// and you should think it over.</span><br />
-				<span class="placeholder"/>isHesitate = u.thinkOver();<br />
-				}<br />
-				<span class="comments">// After a romantic wedding, we will live happily ever after.</span><br />
-				i.marry(u);<br />
-				i.liveHappilyWith(u);<br />
+				<span class="story-title">💕 我们的故事 💕</span><br />
+				<br />
+				<span class="story-line story-rose">遇见你之前，世界是黑白默片；</span><br />
+				<span class="story-line story-rose">遇见你之后，才有了色彩与心跳。</span><br />
+				<br />
+				<span class="story-line story-mint">我不擅长说永远，但一想到明天的你、</span><br />
+				<span class="story-line story-mint">后天的你、往后的每一个你，</span><br />
+				<span class="story-line story-rose">依然在我身边，我就对"余生"这个词，</span><br />
+				<span class="story-line story-rose">充满了无限的期待。</span><br />
+				<br />
+				<span class="story-line story-mint">我的爱或许不完美，但它很真。</span><br />
+				<span class="story-line story-rose">是清晨醒来第一个想念，</span><br />
+				<span class="story-line story-rose">是睡前最想听到的声音，</span><br />
+				<span class="story-line story-mint">是想把所有的"无聊"都和你一起虚度的冲动。</span><br />
+				<br />
+				<span class="story-line story-mint">我不求时时刻刻的浪漫，</span><br />
+				<span class="story-line story-rose">只希望当我们老了，回头一看，</span><br />
+				<span class="story-line story-rose">陪在彼此身边的，还是对方。</span><br />
+				<br />
+				<span class="story-line story-mint">你是我心尖上的风景，</span><br />
+				<span class="story-line story-sunset">一生都看不腻。</span><br />
 			</div>
 			<div id="loveHeart">
 				<canvas id="garden"></canvas>
@@ -55,21 +50,17 @@
 					</div>
 					<div id="loveu">
 						Love u forever and ever.<br/>
-						<div class="signature">- hackerzhou</div>
+						<div class="signature">- Your husband</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div id="copyright">
-			Inspired by <a href="http://www.openrise.com/lab/FlowerPower/">FlowerPower</a> project.<br />
-			Copyright © 2011 <a href='http://hackerzhou.me'>hackerzhou.me</a> 2009-2011
 		</div>
 	</div>
 	<script type="text/javascript">
 		var offsetX = $("#loveHeart").width() / 2;
 		var offsetY = $("#loveHeart").height() / 2 - 55;
 		var together = new Date();
-		together.setFullYear(2010, 10, 2);
+		together.setFullYear(2025, 10, 5);
 		together.setHours(20);
 		together.setMinutes(0);
 		together.setSeconds(0);
