@@ -6,28 +6,32 @@ var offsetX, offsetY;
 
 $(function () {
 	function initLoveScene() {
+		var now = new Date();
+		var isChristmas = (now.getMonth() === 11 && now.getDate() >= 18) || (now.getMonth() === 0 && now.getDate() <= 1);
+		if (isChristmas) return; // 圣诞模式下不初始化爱心场景
+
 		$loveHeart = $("#loveHeart");
 		offsetX = $loveHeart.width() / 2;
 		offsetY = $loveHeart.height() / 2 - 55;
-	    $garden = $("#garden");
-	    gardenCanvas = $garden[0];
-		gardenCanvas.width = $("#loveHeart").width();
-	    gardenCanvas.height = $("#loveHeart").height()
-	    gardenCtx = gardenCanvas.getContext("2d");
-	    gardenCtx.globalCompositeOperation = "source-over";
-	    garden = new Garden(gardenCtx, gardenCanvas);
-		
+    $garden = $("#garden");
+    gardenCanvas = $garden[0];
+	gardenCanvas.width = $("#loveHeart").width();
+    gardenCanvas.height = $("#loveHeart").height()
+    gardenCtx = gardenCanvas.getContext("2d");
+    gardenCtx.globalCompositeOperation = "source-over";
+    garden = new Garden(gardenCtx, gardenCanvas);
+	
 		var contentWidth = $loveHeart.outerWidth(true) + $("#code").outerWidth(true);
 		$("#content").css("width", contentWidth);
 		var contentHeight = Math.max($loveHeart.outerHeight(true), $("#code").outerHeight(true));
 		$("#content").css("height", contentHeight);
-		$("#content").css("margin-top", Math.max(($window.height() - $("#content").height()) / 2, 10));
-		$("#content").css("margin-left", Math.max(($window.width() - $("#content").width()) / 2, 10));
+	$("#content").css("margin-top", Math.max(($window.height() - $("#content").height()) / 2, 10));
+	$("#content").css("margin-left", Math.max(($window.width() - $("#content").width()) / 2, 10));
 
-	    // renderLoop
-	    setInterval(function () {
-	        garden.render();
-	    }, Garden.options.renderSpeed);
+    // renderLoop
+    setInterval(function () {
+        garden.render();
+    }, Garden.options.renderSpeed);
 	}
 
     LoveLock.init(initLoveScene);

@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>圣诞树 · Our Love Story</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="favicon.svg">
+    <link href="css/xmas.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <div id="xmasContainer">
+        <div id="xmasUI">
+            <div class="xmas-controls-minimal">
+                <button id="resetXmas" title="重置视角">🔄</button>
+                <button id="exportXmas" title="保存图片">📸</button>
+            </div>
+        </div>
+        <canvas id="xmasCanvas"></canvas>
+        <audio id="xmasMusic" loop>
+            <source src="christmas-443109.mp3" type="audio/mpeg">
+        </audio>
+        <div id="xmasFooter">
+            <div class="blessing-container">
+                <p class="blessing" id="blessingText">愿你的世界充满光芒，圣诞快乐！</p>
+            </div>
+        </div>
+    </div>
+    <script src="js/xmas.js"></script>
+</body>
+</html>
+
