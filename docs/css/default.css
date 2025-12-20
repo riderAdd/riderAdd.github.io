@@ -7,6 +7,8 @@ body{margin:0;padding:0;background:#ffe;font-size:12px;overflow:auto}#mainDiv{wi
 #code .story-mint{color:#2ec4b6;font-style:italic;text-shadow:0 2px 10px rgba(46,196,182,0.25)}
 #code .story-sunset{color:#ff8fab;font-weight:600;text-shadow:0 3px 14px rgba(255,143,171,0.45)}
 
+#content:after{content:"";display:block;clear:both}
+
 body.love-locked{overflow:hidden}
 #loveLockOverlay{position:fixed;inset:0;background:radial-gradient(circle at top,#ffe1ec 0%,rgba(255,255,255,0.9) 45%,#ffeef6 100%);display:flex;align-items:center;justify-content:center;z-index:999;transition:opacity 0.6s ease,transform 0.6s ease;backdrop-filter:blur(4px)}
 #loveLockOverlay.love-lock-hidden{opacity:0;transform:scale(1.05);pointer-events:none}

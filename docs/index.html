@@ -16,6 +16,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 	<script type="text/javascript" src="js/garden.js?v=3"></script>
     <script type="text/javascript" src="js/functions.js?v=3"></script>
+	<!-- <script type="text/javascript" src="js/functions_dev.js?v=3"></script> -->
 </head>
 
 <body>
@@ -80,11 +81,7 @@
 
 	<script type="text/javascript">
 		$(function () {
-			var now = new Date();
-			var month = now.getMonth(); 
-			var day = now.getDate();
-			// 圣诞节展示时间 (12月21日 - 12月27日)
-			var isChristmas = (month === 11 && day >= 21 && day <= 27);
+			var isChristmas = (window.isChristmasPeriod && window.isChristmasPeriod(new Date()));
 
 			LoveLock.onUnlock(function () {
 				if (isChristmas) {

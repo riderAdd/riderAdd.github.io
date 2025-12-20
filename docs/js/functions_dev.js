@@ -4,11 +4,28 @@ var clientWidth = $(window).width();
 var clientHeight = $(window).height();
 var offsetX, offsetY;
 
+// 统一的圣诞展示时间配置与判断
+var ChristmasConfig = {
+	startMonth: 11, // 12月（0-11）
+	startDay: 20,
+	endMonth: 11,   // 同月
+	endDay: 27
+};
+
+function isChristmasPeriod(date) {
+	var d = date || new Date();
+	var m = d.getMonth();
+	var day = d.getDate();
+	return m === ChristmasConfig.startMonth && day >= ChristmasConfig.startDay && day <= ChristmasConfig.endDay;
+}
+
+// 导出到全局，便于 index.html 等处调用
+window.isChristmasPeriod = isChristmasPeriod;
+
 $(function () {
 	function initLoveScene() {
-		var now = new Date();
-		var isChristmas = (now.getMonth() === 11 && now.getDate() >= 18) || (now.getMonth() === 0 && now.getDate() <= 1);
-		if (isChristmas) return; // 圣诞模式下不初始化爱心场景
+		// 圣诞场景已独立到 xmas.html，这里仅在圣诞展示期内跳过爱心初始化
+		if (isChristmasPeriod(new Date())) return;
 
 		$loveHeart = $("#loveHeart");
 		offsetX = $loveHeart.width() / 2;
