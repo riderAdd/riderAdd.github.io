@@ -9,7 +9,7 @@ var ChristmasConfig = {
 	startMonth: 11, // 12月（0-11）
 	startDay: 21,
 	endMonth: 11,   // 同月
-	endDay: 26
+	endDay: 25
 };
 
 function isChristmasPeriod(date) {
