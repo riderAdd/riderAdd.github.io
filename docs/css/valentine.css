@@ -1,0 +1,283 @@
+/* ============================================
+   Valentine's Day 2026 - 霓虹风格主题
+   ============================================ */
+
+:root {
+    --neon-pink: #ff2d75;
+    --neon-rose: #ff6b9d;
+    --neon-soft: #ffa0c0;
+    --gold: #ffd700;
+    --white: #ffffff;
+    --bg-dark: #0a0a0f;
+    --bg-purple: #1a0a1a;
+}
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    background: var(--bg-dark);
+    color: var(--white);
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* ============================================
+   主容器
+   ============================================ */
+#valentineContainer {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at center, var(--bg-purple) 0%, var(--bg-dark) 70%);
+}
+
+#valentineCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* ============================================
+   控制按钮
+   ============================================ */
+#valentineUI {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+.valentine-controls {
+    display: flex;
+    gap: 12px;
+}
+
+.valentine-controls button {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 45, 117, 0.3);
+    background: rgba(10, 10, 15, 0.6);
+    backdrop-filter: blur(10px);
+    color: var(--neon-rose);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.valentine-controls button:hover {
+    background: rgba(255, 45, 117, 0.15);
+    border-color: var(--neon-pink);
+    box-shadow: 0 0 20px rgba(255, 45, 117, 0.4);
+    transform: scale(1.1);
+}
+
+.valentine-controls button svg {
+    width: 18px;
+    height: 18px;
+}
+
+#toggleMusic .music-on-icon { display: block; }
+#toggleMusic .music-off-icon { display: none; }
+#toggleMusic.music-off .music-on-icon { display: none; }
+#toggleMusic.music-off .music-off-icon { display: block; }
+
+/* ============================================
+   主要内容区
+   ============================================ */
+#valentineContent {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.text-wrapper {
+    text-align: center;
+    transform: translateY(-5%);
+}
+
+/* 主标题 - 霓虹效果 */
+.main-title {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    line-height: 1;
+}
+
+.title-line {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 400;
+    color: var(--white);
+    text-shadow: 
+        0 0 5px rgba(255, 255, 255, 0.8),
+        0 0 10px rgba(255, 255, 255, 0.5),
+        0 0 20px rgba(255, 107, 157, 0.5);
+    letter-spacing: 2px;
+}
+
+.title-line.accent {
+    font-size: clamp(2.2rem, 8vw, 4.5rem);
+    color: var(--white);
+    text-shadow: 
+        0 0 5px #fff,
+        0 0 10px #fff,
+        0 0 20px var(--neon-pink),
+        0 0 40px var(--neon-pink),
+        0 0 80px var(--neon-pink);
+    animation: neonPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes neonPulse {
+    from {
+        text-shadow: 
+            0 0 5px #fff,
+            0 0 10px #fff,
+            0 0 20px var(--neon-pink),
+            0 0 40px var(--neon-pink),
+            0 0 80px var(--neon-pink);
+    }
+    to {
+        text-shadow: 
+            0 0 2px #fff,
+            0 0 5px #fff,
+            0 0 10px var(--neon-pink),
+            0 0 20px var(--neon-pink),
+            0 0 40px var(--neon-pink),
+            0 0 100px var(--neon-pink),
+            0 0 150px var(--neon-pink);
+    }
+}
+
+/* 年份显示 - 优雅线条风格 */
+.year-display {
+    margin-top: 30px;
+    position: relative;
+    display: inline-block;
+}
+
+.year-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 300;
+    letter-spacing: 0.5em;
+    color: var(--neon-soft);
+    text-shadow: 0 0 30px rgba(255, 45, 117, 0.5);
+    position: relative;
+    padding: 0 20px;
+}
+
+.year-text::before,
+.year-text::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neon-rose), transparent);
+}
+
+.year-text::before {
+    right: 100%;
+    margin-right: 15px;
+}
+
+.year-text::after {
+    left: 100%;
+    margin-left: 15px;
+}
+
+/* 标语 */
+.tagline {
+    margin-top: 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(0.8rem, 2vw, 1rem);
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* ============================================
+   底部区域
+   ============================================ */
+#valentineFooter {
+    position: fixed;
+    bottom: 25px;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    text-align: center;
+    pointer-events: none;
+}
+
+.interaction-hint {
+    font-size: 0.85rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: rgba(255, 160, 192, 0.5);
+    animation: fadeInOut 3s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+}
+
+/* ============================================
+   响应式设计
+   ============================================ */
+@media (max-width: 768px) {
+    .year-text::before,
+    .year-text::after {
+        width: 40px;
+    }
+
+    #valentineUI {
+        top: 15px;
+        right: 15px;
+    }
+
+    .valentine-controls button {
+        width: 38px;
+        height: 38px;
+    }
+}
+
+@media (max-width: 480px) {
+    .year-text {
+        letter-spacing: 0.3em;
+    }
+
+    .year-text::before,
+    .year-text::after {
+        width: 25px;
+    }
+
+    .tagline {
+        letter-spacing: 0.2em;
+    }
+}
+
+/* ============================================
+   选中样式
+   ============================================ */
+::selection {
+    background: var(--neon-pink);
+    color: var(--white);
+}

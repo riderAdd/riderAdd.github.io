@@ -22,10 +22,28 @@ function isChristmasPeriod(date) {
 // 导出到全局，便于 index.html 等处调用
 window.isChristmasPeriod = isChristmasPeriod;
 
+// 情人节展示时间配置与判断（2月12日-14日）
+var ValentineConfig = {
+	startMonth: 1,  // 2月（0-11）
+	startDay: 12,
+	endMonth: 1,
+	endDay: 14
+};
+
+function isValentinePeriod(date) {
+	var d = date || new Date();
+	var m = d.getMonth();
+	var day = d.getDate();
+	return m === ValentineConfig.startMonth && day >= ValentineConfig.startDay && day <= ValentineConfig.endDay;
+}
+
+// 导出到全局
+window.isValentinePeriod = isValentinePeriod;
+
 $(function () {
 	function initLoveScene() {
-		// 圣诞场景已独立到 xmas.html，这里仅在圣诞展示期内跳过爱心初始化
-		if (isChristmasPeriod(new Date())) return;
+		// 节日场景已独立，在节日展示期内跳过爱心初始化
+		if (isChristmasPeriod(new Date()) || isValentinePeriod(new Date())) return;
 
 		$loveHeart = $("#loveHeart");
 		offsetX = $loveHeart.width() / 2;

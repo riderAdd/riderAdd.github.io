@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day 2026 · Our Love Story</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="favicon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+    <link href="css/valentine.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id="valentineContainer">
+        <!-- Canvas 粒子背景 -->
+        <canvas id="valentineCanvas"></canvas>
+        
+        <!-- 控制按钮 -->
+        <div id="valentineUI">
+            <div class="valentine-controls">
+                <button id="resetView" title="重置粒子">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                        <path d="M3 3v5h5"/>
+                    </svg>
+                </button>
+                <button id="exportImg" title="保存图片">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                </button>
+                <button id="toggleMusic" title="音乐开关" class="music-off">
+                    <svg class="music-on-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18V5l12-2v13"/>
+                        <circle cx="6" cy="18" r="3"/>
+                        <circle cx="18" cy="16" r="3"/>
+                    </svg>
+                    <svg class="music-off-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18V5l12-2v13"/>
+                        <circle cx="6" cy="18" r="3"/>
+                        <circle cx="18" cy="16" r="3"/>
+                        <line x1="1" y1="1" x2="23" y2="23" stroke-width="2.5"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- 主要内容区 -->
+        <div id="valentineContent">
+            <div class="text-wrapper">
+                <h1 class="main-title">
+                    <span class="title-line">Happy</span>
+                    <span class="title-line accent">Valentine's Day</span>
+                </h1>
+                <div class="year-display">
+                    <span class="year-text">2026</span>
+                </div>
+                <p class="tagline">Forever & Always</p>
+            </div>
+        </div>
+
+        <!-- 底部区域 -->
+        <footer id="valentineFooter">
+            <p class="interaction-hint">点击任意位置生成爱心</p>
+        </footer>
+
+        <!-- 背景音乐 - 请将情人节音乐文件命名为 valentine-music.mp3 放在 docs/ 目录下 -->
+        <audio id="valentineMusic" loop preload="auto">
+            <source src="valentine-music.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <script src="js/valentine.js"></script>
+</body>
+</html>

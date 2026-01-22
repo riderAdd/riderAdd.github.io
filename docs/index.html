@@ -82,9 +82,12 @@
 	<script type="text/javascript">
 		$(function () {
 			var isChristmas = (window.isChristmasPeriod && window.isChristmasPeriod(new Date()));
+			var isValentine = (window.isValentinePeriod && window.isValentinePeriod(new Date()));
 
 			LoveLock.onUnlock(function () {
-				if (isChristmas) {
+				if (isValentine) {
+					window.location.href = "valentine.html";
+				} else if (isChristmas) {
 					window.location.href = "xmas.html";
 				} else {
 					$("#xmasContainer").hide();
